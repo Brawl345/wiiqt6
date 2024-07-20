@@ -143,6 +143,32 @@
                 };
               };
 
+          symbolizer =
+            pkgs.stdenv.mkDerivation
+              {
+                pname = "symbolizer";
+                inherit version;
+                src = pkgs.lib.cleanSource self;
+
+                sourceRoot = "source/symbolizer";
+
+                buildInputs = [ pkgs.qt6.qmake pkgs.qt6.qtbase ];
+                nativeBuildInputs = [ pkgs.qt6.wrapQtAppsHook ];
+
+                installPhase = ''
+                  mkdir -p "$out/bin"
+                  mv "symbolizer" "$out/bin"
+                '';
+
+                meta = {
+                  description = "ELF Symbolizer for Wii";
+                  homepage = "https://github.com/martravi/wiiqt6";
+                  license = pkgs.lib.licenses.gpl3Only;
+                  platforms = pkgs.lib.platforms.darwin ++ pkgs.lib.platforms.linux;
+                };
+              };
+
+
 
         });
 
